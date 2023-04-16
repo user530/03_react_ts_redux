@@ -1,9 +1,9 @@
 import * as actions from './features/creators';
 
-export interface AppStateType {
-  quests: Quest[];
-  filters: Filter;
-}
+// export interface AppStateType {
+//   quests: Quest[];
+//   filters: Filter;
+// }
 
 export type Location =
   | 'Location A'
@@ -25,5 +25,5 @@ export interface Filter {
   locations: Location[];
 }
 
-type ActionCreators<T> = T extends { [key: string]: infer U } ? U : never;
-export type ActionTypes = ReturnType<ActionCreators<typeof actions>>;
+// type ActionCreators<T> = T extends { [key: string]: infer U } ? U : never;
+// export type ActionTypes = ReturnType<ActionCreators<typeof actions>>;
