@@ -14,7 +14,7 @@ const QuestComponent = (props: QuestProps) => {
     const {id, name, location, xp, completed} = props.quest;
 
     return (
-        <li className={`quest ${completed ? 'completed' : null}` }>
+        <li className={`quest ${completed ? 'completed' : ''}` }>
             <span>{name}</span>
             <span>{location}</span>
             <span>{xp}</span>

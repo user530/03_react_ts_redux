@@ -1,8 +1,9 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Quest } from '../../models';
-import { RootState } from '../../app/store';
+import { AppDispatch, RootState } from '../../app/store';
+import { Location } from '../../models';
 
-const initialState: Quest[] = [
+const initialState = [
   {
     id: 0,
     name: 'Complete the tutorial',
@@ -38,25 +39,30 @@ const initialState: Quest[] = [
     xp: 250,
     completed: false,
   },
-];
+] as Quest[];
+
+export const testAsyncThunk = createAsyncThunk<
+  Quest,
+  { name: string; location: Location; xp: number },
+  { dispatch: AppDispatch; state: RootState }
+>('quests/testAsync', async (thunkArg, thunkApi) => {
+  setTimeout(() => console.log('Async thunk fired!'), 500);
+
+  return {
+    id: nextQuestId(thunkApi.getState().quests),
+    name: thunkArg.name,
+    location: thunkArg.location,
+    xp: thunkArg.xp,
+    completed: false,
+  };
+});
 
 export const questSliceTS = createSlice({
   name: 'quests',
   initialState,
   reducers: {
-    addQuest: (
-      state,
-      action: PayloadAction<{ name: string; location: string; xp: number }>
-    ) => {
-      const { name, location, xp } = action.payload;
-      const newQuest = {
-        id: nextQuestId(state),
-        name,
-        location,
-        xp,
-        completed: false,
-      } as Quest;
-      state = [...state, newQuest];
+    addQuest: (state, action: PayloadAction<Quest>) => {
+      state.push(action.payload);
     },
 
     removeQuest: (state, action: PayloadAction<{ questId: number }>) => {
@@ -76,6 +82,19 @@ export const questSliceTS = createSlice({
       );
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(testAsyncThunk.pending, (state, action) => {
+        console.log('Async Thunk Pending!');
+      })
+      .addCase(testAsyncThunk.rejected, (state, action) => {
+        console.log('Async Thunk Rejected!');
+      })
+      .addCase(testAsyncThunk.fulfilled, (state, action) => {
+        console.log('Async Thunk Fulfilled!');
+        state.push(action.payload);
+      });
+  },
 });
 
 export const { addQuest, removeQuest, toggleQuestComplete } =
@@ -85,7 +104,7 @@ export const selectQuests = (state: RootState) => state.quests;
 
 export default questSliceTS.reducer;
 
-function nextQuestId(quests: Quest[]): number {
+export function nextQuestId(quests: Quest[]): number {
   const maxId = quests.reduce(
     (maxId, currentQuest) => Math.max(maxId, currentQuest.id),
     -1
