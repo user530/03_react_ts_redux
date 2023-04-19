@@ -1,0 +1,30 @@
+.quest-input-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  width: 60%;
+  font-size: 20px;
+  justify-content: center;
+  border: 1px solid gray;
+  background-color: coral;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.quest-input-form input,
+.quest-input-form select {
+  height: 26px;
+  width: 160px;
+  text-align: center;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
+.quest-input-form input[type='submit'] {
+  width: 100%;
+  border-radius: 10px;
+}

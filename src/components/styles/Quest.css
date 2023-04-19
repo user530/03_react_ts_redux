@@ -1,0 +1,46 @@
+td {
+  height: 35px;
+  border: 1px solid;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 20px;
+}
+
+.quest button.reset-quest,
+.quest button.complete-quest,
+.quest button.delete-quest {
+  background: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 3px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.quest button.reset-quest {
+  background-color: dodgerblue;
+  color: whitesmoke;
+}
+
+.quest button.reset-quest:hover {
+  background-color: rgba(30, 143, 255, 0.8);
+}
+
+.quest button.complete-quest {
+  background-color: green;
+  color: whitesmoke;
+}
+
+.quest button.complete-quest:hover {
+  background-color: rgba(0, 128, 0, 0.8);
+}
+
+.quest button.delete-quest {
+  background-color: rgb(128, 0, 0);
+  color: whitesmoke;
+}
+
+.quest button.delete-quest:hover {
+  background-color: rgba(128, 0, 0, 0.8);
+}

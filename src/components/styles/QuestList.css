@@ -1,0 +1,24 @@
+table {
+  width: 80%;
+}
+
+table,
+th {
+  border: 1px solid;
+  font-size: 20px;
+}
+
+tr {
+  background-color: azure;
+}
+
+tr:nth-child(odd) {
+  background-color: gainsboro;
+}
+
+th {
+  height: 35px;
+  color: white;
+  background-color: dimgray;
+  font-weight: bold;
+}

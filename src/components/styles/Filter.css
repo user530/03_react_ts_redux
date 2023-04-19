@@ -1,0 +1,55 @@
+.filter-component {
+  font-size: 20px;
+}
+
+.filter-component h2 {
+  font-size: 24px;
+}
+
+.filter-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 20px;
+  border: 1px solid gray;
+  background-color: gold;
+  width: 60%;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.filter-status,
+.filter-location,
+.filter-xp {
+  display: flex;
+  column-gap: 25px;
+}
+
+.filter-status input,
+.filter-location input,
+.filter-xp input {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.filter-status input[type='radio'] {
+}
+
+.filter-location input[type='checkbox'] {
+}
+
+.filter-location input[type='checkbox']:checked {
+  outline: 1px solid gray;
+}
+
+.filter-xp input[type='number'] {
+  height: 26px;
+  width: 80px;
+  text-align: center;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+}

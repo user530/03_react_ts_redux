@@ -1,40 +1,30 @@
 import React from 'react';
 import './App.css';
-
 import QuestListComponent from './components/QuestList';
-
-import {useAppSelector, useAppDispatch} from './app/hooks';
-import { selectQuests, addQuest, nextQuestId, testAsyncThunk} from './features/quests/questsSliceTS';
+import { useAppSelector } from './app/hooks';
+import { selectQuests } from './features/quests/questsSliceTS';
 import { selectFilters } from './features/filters/filtersSliceTS';
-import { Quest } from './models';
+import FilterComponent from './components/Filter';
+import InputFormComponent from './components/InputForm';
 
 function App() {
-  const dispatch = useAppDispatch();
-
   const quests = useAppSelector(selectQuests);
   const filters = useAppSelector(selectFilters);
-  
-  
-  console.log(quests);
-  console.log(filters);
 
-  React.useEffect(()=>{
-    const newQuest:Quest = 
-      {id: nextQuestId(quests), name: 'New quest!', location: 'Location B', xp: 35, completed: false};
-   
-    // Dispatch standard action
-    dispatch(addQuest(newQuest));
-    
-    // Dispatch async thunk
-    dispatch(testAsyncThunk({name: 'another quest', location: 'Location C', xp: 100}))
-  }, [])
+  const filteredQuests = quests.filter(
+    (quest) =>
+      quest.completed === filters.completed &&
+      filters.locations.includes(quest.location) &&
+      quest.xp >= filters.xpRange[0] &&
+      quest.xp <= filters.xpRange[1]
+  );
 
   return (
     <div className="App">
-      <h1>App component</h1>
-
-      <QuestListComponent quests={quests}/>
-
+      <h1>Quest Log:</h1>
+      <InputFormComponent />
+      <FilterComponent filters={filters} />
+      <QuestListComponent quests={filteredQuests} />
     </div>
   );
 }

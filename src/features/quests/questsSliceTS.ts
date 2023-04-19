@@ -42,33 +42,36 @@ const initialState = [
 ] as Quest[];
 
 export const testAsyncThunk = createAsyncThunk<
-  Quest,
+  void,
   { name: string; location: Location; xp: number },
   { dispatch: AppDispatch; state: RootState }
 >('quests/testAsync', async (thunkArg, thunkApi) => {
   setTimeout(() => console.log('Async thunk fired!'), 500);
-
-  return {
-    id: nextQuestId(thunkApi.getState().quests),
-    name: thunkArg.name,
-    location: thunkArg.location,
-    xp: thunkArg.xp,
-    completed: false,
-  };
 });
 
 export const questSliceTS = createSlice({
   name: 'quests',
   initialState,
   reducers: {
-    addQuest: (state, action: PayloadAction<Quest>) => {
-      state.push(action.payload);
+    addQuest: (
+      state,
+      action: PayloadAction<{ name: string; location: Location; xp: number }>
+    ) => {
+      const { name, location, xp } = action.payload;
+
+      state.push({
+        id: nextQuestId(state),
+        name,
+        location,
+        xp,
+        completed: false,
+      });
     },
 
     removeQuest: (state, action: PayloadAction<{ questId: number }>) => {
       const { questId } = action.payload;
 
-      state = state.filter((quest) => quest.id !== questId);
+      return state.filter((quest) => quest.id !== questId);
     },
 
     toggleQuestComplete: (
@@ -77,22 +80,22 @@ export const questSliceTS = createSlice({
     ) => {
       const { questId } = action.payload;
 
-      state = state.map((quest) =>
+      return state.map((quest) =>
         quest.id === questId ? { ...quest, completed: !quest.completed } : quest
       );
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(testAsyncThunk.pending, (state, action) => {
-        console.log('Async Thunk Pending!');
+        // console.log('Async Thunk Pending!');
       })
       .addCase(testAsyncThunk.rejected, (state, action) => {
-        console.log('Async Thunk Rejected!');
+        // console.log('Async Thunk Rejected!');
       })
       .addCase(testAsyncThunk.fulfilled, (state, action) => {
-        console.log('Async Thunk Fulfilled!');
-        state.push(action.payload);
+        // console.log('Async Thunk Fulfilled!');
       });
   },
 });
